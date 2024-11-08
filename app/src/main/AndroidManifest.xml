@@ -25,6 +25,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".EmailVerificationActivity" />
+        <activity android:name=".SupportActivity" />
+        <activity android:name=".ResetPasswordActivity" />
     </application>
 
 </manifest>

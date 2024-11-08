@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -15,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
         val editTextPassword = findViewById<EditText>(R.id.editTextPassword)
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val buttonSignUp = findViewById<Button>(R.id.buttonToSignUpView)
+        val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
 
         buttonLogin.setOnClickListener {
             val username = editTextUsername.text.toString()
@@ -24,6 +26,10 @@ class LoginActivity : AppCompatActivity() {
 
         buttonSignUp.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
+        }
+
+        textViewForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
     }
 }

@@ -77,4 +77,15 @@
         android:text="Leave a message"
         android:textAllCaps="false" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonBackToLogin"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:layout_marginTop="16dp"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconGravity="start" />
+
 </LinearLayout>
