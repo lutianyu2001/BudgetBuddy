@@ -1,4 +1,4 @@
-package com.cs407.badgerbudget
+package com.cs407.budgetbuddy
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.cs407.budgetbuddy1.R
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +17,7 @@ class SignUpActivity : AppCompatActivity() {
         val editTextPassword = findViewById<EditText>(R.id.editTextSignUpPassword)
         val editTextConfirmPassword = findViewById<EditText>(R.id.editTextSignUpConfirmPassword)
         val buttonSignUp = findViewById<Button>(R.id.buttonSignUp)
-        val textViewLogin = findViewById<TextView>(R.id.textViewLogin)
+        val buttonToLoginView = findViewById<Button>(R.id.buttonToLoginView)
 
         buttonSignUp.setOnClickListener {
             val username = editTextUsername.text.toString()
@@ -30,7 +29,7 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(Intent(this, EmailVerificationActivity::class.java))
         }
 
-        textViewLogin.setOnClickListener {
+        buttonToLoginView.setOnClickListener {
             finish() //take the user back to the LoginActivity
         }
     }
