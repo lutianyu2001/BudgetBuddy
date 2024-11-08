@@ -17,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val buttonSignUp = findViewById<Button>(R.id.buttonToSignUpView)
         val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
+        val textViewContactUs = findViewById<TextView>(R.id.textViewContactUs)
 
         buttonLogin.setOnClickListener {
             val username = editTextUsername.text.toString()
@@ -30,6 +31,10 @@ class LoginActivity : AppCompatActivity() {
 
         textViewForgotPassword.setOnClickListener {
             startActivity(Intent(this, ResetPasswordActivity::class.java))
+        }
+
+        textViewContactUs.setOnClickListener {
+            startActivity(Intent(this, SupportActivity::class.java))
         }
     }
 }
