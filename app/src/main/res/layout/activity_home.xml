@@ -162,11 +162,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$ 3,985.62"
+                    android:text="Preview"
                     android:textColor="#4CAF50"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="auto"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Search Bar -->
@@ -213,15 +212,15 @@
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
+        android:id="@+id/bottomNavigationHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F3F0F7"
         app:itemIconTint="@color/bottom_nav_colors"
         app:itemTextColor="@color/bottom_nav_colors"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"/>
+    <!-- android:background="?android:attr/colorBackground" -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
