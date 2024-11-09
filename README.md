@@ -57,7 +57,8 @@ MAKE SURE You pull from this repository every time before start working!
     * `activity_home.xml`: Qiming Zhang
     * `activity_login.xml`: Qiming Zhang
     * `activity_main.xml`: Sanjana Golla
-    * `activity_reset_password.xml`: Qiming Zhang `activity_signup.xml`
+    * `activity_reset_password.xml`: Qiming Zhang
+    * `activity_signup.xml`: Qiming Zhang
     * `activity_support.xml`: Sky Lu
     * `activity_transaction_details.xml`: Sky Lu
 
