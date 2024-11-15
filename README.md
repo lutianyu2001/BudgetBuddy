@@ -71,5 +71,5 @@ MAKE SURE You pull from this repository every time before start working!
         * SignUpActivity.kt
         * SupportActivity.kt
     * Bug Fix: Sky Lu
-    * *In Progress: App Remote Server Setup: Sky Lu*
-    * *TODO: Activity Implementation: Sanjana Golla, Sky Lu*
+    * App Remote Server: Sky Lu
+    * *TODO: Backend: Sanjana Golla*
