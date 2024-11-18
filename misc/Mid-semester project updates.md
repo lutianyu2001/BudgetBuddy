@@ -1,6 +1,8 @@
-# App Name: BudgetBuddy
+# 0. App and Group Project Information
 
-GitHub Link: https://github.com/lutianyu2001/BudgetBuddy
+### App Name: BudgetBuddy
+
+### GitHub Link: https://github.com/lutianyu2001/BudgetBuddy
 
 - Qiming Zhang
     * UW email: qzhang478@wisc.edu
@@ -15,7 +17,7 @@ GitHub Link: https://github.com/lutianyu2001/BudgetBuddy
     * GitHub ID: sanjuGolla1
 
 
-# Initial Milestones
+# 1. Initial Milestones
 
 ## October 28, 2024  
 ### Mobile App:  
@@ -58,10 +60,14 @@ Conduct security audits and performance optimizations
 Complete user documentation  
 Prepare app for deployment on app stores  
 
-# A revised set of milestones
+# 2. A revised set of milestones
 
 ## a) Current Progress:  
 List all tasks or milestones completed as of this submission, comparing this progress to your original milestones submitted with your Wireframes. 
 
 ## b) Future Milestones:  
 Outline weekly milestones you plan to achieve by Dec 2 and Dec 11. With your current project experience, provide specific goals for these dates to clarify where you expect to be by the end of the semester.
+
+# 3. Additional Comments (OPTIONAL)
+
+
