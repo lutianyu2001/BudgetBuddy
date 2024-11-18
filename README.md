@@ -1,18 +1,15 @@
 # CS 407 Group Project BudgetBuddy Master Repository
 
-## Group Member
-
+## Group Member  
 1. Qiming Zhang
     * UW Email: qzhang478@wisc.edu
     * GitHub ID: terry-qmzhang
-
 2. Sky Lu
     * UW Email: tlu83@wisc.edu
     * GitHub ID: lutianyu2001
 3. Sanjana Golla
     * UW Email: ssgolla@wisc.edu
     * GitHub ID: sanjuGolla1
-
 
 ## Content
 
@@ -21,33 +18,13 @@
 
 ## How to Contribute
 
-MAKE SURE You pull from this repository every time before start working!
+***IMPORTANT: MAKE SURE You pull from this repository every time before start working!***
 
 ## Progress & Contribution
 
-### Proposal
+### Milestone 2 (By 11/22/2024)  
 
-* Qiming Zhang: 60%
-* Sky Lu: 30%
-* Sanjana Golla: 10%
-
-### Wireframe
-
-1. Project Report: Sky Lu
-2. Wireframe
-
-    * Login: Sky Lu
-    * Sign up: Sky Lu
-    * Contact Us: Sky Lu
-    * Email Verification: Sky Lu
-    * Biometric Login: Qiming Zhang
-    * Home Page: Qiming Zhang
-    * Navigation Bar: Qiming Zhang
-    * Input Data Menu: Qiming Zhang
-    * Upload Dropbox: Qiming Zhang
-    * Transcation Details: Qiming Zhang
-    * Analysis (Default: Week): Qiming Zhang
-    * Analysis Sub-panel (Month, Year): Sanjana Golla
+### Mid-semester Project Updates Report Contribution (By 11/18/2024)
 
 ### Milestone 1 (By 11/08/2024)
 
@@ -73,3 +50,28 @@ MAKE SURE You pull from this repository every time before start working!
     * Bug Fix: Sky Lu
     * App Remote Server: Sky Lu
     * *TODO: Backend: Sanjana Golla*
+
+
+### Wireframe Contribution (By 10/08/2024)
+
+1. Project Report: Sky Lu
+2. Wireframe
+
+    * Login: Sky Lu
+    * Sign up: Sky Lu
+    * Contact Us: Sky Lu
+    * Email Verification: Sky Lu
+    * Biometric Login: Qiming Zhang
+    * Home Page: Qiming Zhang
+    * Navigation Bar: Qiming Zhang
+    * Input Data Menu: Qiming Zhang
+    * Upload Dropbox: Qiming Zhang
+    * Transcation Details: Qiming Zhang
+    * Analysis (Default: Week): Qiming Zhang
+    * Analysis Sub-panel (Month, Year): Sanjana Golla
+  
+### Proposal Contribution (By 09/17/2024)
+
+* Qiming Zhang: 60%
+* Sky Lu: 30%
+* Sanjana Golla: 10%
