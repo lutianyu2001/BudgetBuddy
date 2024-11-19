@@ -64,7 +64,9 @@ Prepare app for deployment on app stores
 
 ## a) Current Progress:  
 List all tasks or milestones completed as of this submission, comparing this progress to your original milestones submitted with your Wireframes. 
+
 Milestone 1:
+
 Mobile app: 
 Complete user interface design 
 Implement user registration and login screens 
