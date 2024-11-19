@@ -78,7 +78,7 @@ Implement user authentication API
 ## b) Future Milestones:  
 Outline weekly milestones you plan to achieve by Dec 2 and Dec 11. With your current project experience, provide specific goals for these dates to clarify where you expect to be by the end of the semester.
 
-Milestone 2: (22nd December) 
+Milestone 2: (22nd November) 
 
 Mobile app: 
 Implement income and expense tracking features 
@@ -88,7 +88,7 @@ Backend
 Implement API endpoints for income and expense tracking 
 Create data storage and retrieval system for user financial data 
 
-Milestone 3: (26th December) 
+Milestone 3: (2nd December) 
 
 Mobile app: 
 Implement notification system for budget alerts 
