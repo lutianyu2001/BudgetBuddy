@@ -18,7 +18,7 @@
 
 ## How to Contribute
 
-***IMPORTANT: MAKE SURE You pull from this repository every time before start working!***
+***IMPORTANT: MAKE SURE You checkout README.md and pull from this repository every time before start working!***
 
 ## Progress & Contribution
 
