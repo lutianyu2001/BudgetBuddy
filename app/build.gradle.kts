@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
     id("io.github.takahirom.roborazzi") version "1.8.0-alpha-5"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -78,6 +79,9 @@ dependencies {
 
     testImplementation("org.robolectric:robolectric:4.13")
 
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+
     // Espresso dependencies
     testImplementation("androidx.test.espresso:espresso-core:3.6.1")
     testImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
@@ -93,4 +97,7 @@ dependencies {
 
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
 }

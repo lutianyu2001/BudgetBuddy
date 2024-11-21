@@ -12,10 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.cs407.budgetbuddy.data.BudgetDatabase
 import com.cs407.budgetbuddy.data.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.security.MessageDigest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SignUpActivity(
     private val injectedUserViewModel: UserViewModel? = null
@@ -23,6 +27,7 @@ class SignUpActivity(
     private lateinit var userViewModel: UserViewModel
     private lateinit var userPasswdKV: SharedPreferences
     private lateinit var budgetDB: BudgetDatabase
+    private lateinit var auth: FirebaseAuth
 
     private var userId: Long = 0
 
@@ -30,6 +35,7 @@ class SignUpActivity(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        auth = Firebase.auth
         userPasswdKV = getSharedPreferences(getString(R.string.userPasswdKV), Context.MODE_PRIVATE)
         budgetDB = BudgetDatabase.getDatabase(this)
 
@@ -71,41 +77,54 @@ class SignUpActivity(
             }
 
             // TODO adjust UI so that error TextView will report if invalid phone number is entered
-            if (phoneNumber != null && phoneNumber.matches(Regex("^\\d{10}$"))) {
+            if (phoneNumber != null && phoneNumber.matches(Regex("^\\d{11}$"))) {
                 Log.println(Log.VERBOSE, "SignUpActivity", "Phone number has incorrect format")
                 return@setOnClickListener
             }
 
-            // check if given username/password combination is available
             lifecycleScope.launch {
                 val isUsernameTaken = withContext(Dispatchers.IO) {
                     checkUsernameTaken(username)
                 }
                 if (isUsernameTaken) {
-                    // TODO adjust UI so that an error TextView will report that a username is taken
                     Log.println(Log.VERBOSE, "SignUpActivity", "Username is taken")
-                    return@launch
                 } else {
-                    // add the new user to the budgetDB
-                    withContext(Dispatchers.IO) {
-                        val newUser = User(username = username, email = email, phoneNumber = phoneNumber)
-                        userId = budgetDB.userDao().insertUser(newUser)
-                    }
-
-                    // store the hashed password in SharedPreferences
-                    with (userPasswdKV.edit()) {
-                        val passwdHashed = hash(password)
-                        putString(username, passwdHashed)
-                        apply()
-                    }
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val user = auth.currentUser
+                                user?.sendEmailVerification()?.addOnCompleteListener { verificationTask ->
+                                    if (verificationTask.isSuccessful) {
+                                        Log.println(Log.VERBOSE, "SignUpActivity", "Verification email sent")
+                                        saveUserToDatabaseAndSharedPrefs(username, email, phoneNumber, password)
+                                        startActivity(Intent(this@SignUpActivity, EmailVerificationActivity::class.java))
+                                    } else {
+                                        Log.println(Log.ERROR, "SignUpActivity", "Verification email failed to send")
+                                    }
+                                }
+                            } else {
+                                Log.println(Log.ERROR, "SignUpActivity", "The user didn't get created")
+                            }
+                        }
                 }
             }
-
-            startActivity(Intent(this, EmailVerificationActivity::class.java))
         }
 
         buttonToLoginView.setOnClickListener {
             finish() //take the user back to the LoginActivity
+        }
+    }
+
+    private fun saveUserToDatabaseAndSharedPrefs(username: String, email: String, phoneNumber: String, password: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val newUser = User(username = username, email = email, phoneNumber = phoneNumber)
+            budgetDB.userDao().insertUser(newUser)
+
+            val hashedPasswd = hash(password)
+            with (userPasswdKV.edit()) {
+                putString(username, hashedPasswd)
+                apply()
+            }
         }
     }
 
