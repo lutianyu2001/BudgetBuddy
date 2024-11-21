@@ -22,7 +22,17 @@ import java.util.Date
 import androidx.room.Database
 import androidx.room.OnConflictStrategy
 
+class Converters {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
 
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
+    }
+}
 
 @Entity(
     tableName = "User",
@@ -30,7 +40,9 @@ import androidx.room.OnConflictStrategy
 )
 data class User(
     @PrimaryKey(autoGenerate = true) val userId: Int = 0,
-    @ColumnInfo(name = "username") val username:String?
+    @ColumnInfo(name = "username") val username:String?,
+    @ColumnInfo(name = "email") val email:String?,
+    @ColumnInfo(name = "phoneNumber") val phoneNumber:String?
 )
 
 @Entity(
@@ -50,7 +62,7 @@ data class BudgetTransaction (
     primaryKeys = ["userId", "transactionId"],
     foreignKeys = [
         ForeignKey(entity = User::class, parentColumns = ["userId"], childColumns = ["userId"]),
-        ForeignKey(entity = Transaction::class, parentColumns = ["transactionId"], childColumns = ["transactionId"])
+        ForeignKey(entity = BudgetTransaction::class, parentColumns = ["transactionId"], childColumns = ["transactionId"])
     ]
 )
 data class UserTransaction (
@@ -72,7 +84,11 @@ interface TransactionDao {
 
 }
 
-@Database(entities = [User::class, BudgetTransaction::class, UserTransaction::class], version = 1, exportSchema = false)
+@Database(
+    entities = [User::class, BudgetTransaction::class, UserTransaction::class],
+    version = 1,
+    exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class BudgetDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun transactionDao(): TransactionDao

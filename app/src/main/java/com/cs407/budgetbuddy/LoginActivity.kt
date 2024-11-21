@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.cs407.budgetbuddy.data.BudgetDatabase
 import com.cs407.budgetbuddy.data.User
@@ -21,12 +22,12 @@ import kotlinx.coroutines.withContext
 class LoginActivity(
     private val injectedUserViewModel: UserViewModel? = null
 ) : AppCompatActivity() {
-    private var editTextUsername = findViewById<EditText>(R.id.editTextUsername)
-    private var editTextPassword = findViewById<EditText>(R.id.editTextPassword)
-    private var buttonLogin = findViewById<Button>(R.id.buttonLogin)
-    private var buttonSignUp = findViewById<Button>(R.id.buttonToSignUpView)
-    private var textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
-    private var textViewContactUs = findViewById<TextView>(R.id.textViewContactUs)
+    private lateinit var editTextUsername:EditText
+    private lateinit var editTextPassword:EditText
+    private lateinit var buttonLogin:Button
+    private lateinit var buttonSignUp:Button
+    private lateinit var textViewForgotPassword:TextView
+    private lateinit var textViewContactUs:TextView
 
     private lateinit var userViewModel: UserViewModel
 
@@ -60,16 +61,24 @@ class LoginActivity(
         buttonLogin.setOnClickListener {
             val username = editTextUsername.text.toString()
             val password = editTextPassword.text.toString()
-            // TODO: Implement login logic
 
-            if (username.isBlank() || password.isBlank()) {
-
+            if (username.isBlank() ||
+                password.isBlank()) {
+                // TODO adjust UI so that an error TextView will report to the user that entries are mandatory
+                Log.println(Log.VERBOSE, "LoginFragment", "username or password is blank")
             } else {
                 lifecycleScope.launch {
-                    val isAuthenticated = getUsernamePasswd(username, password)
+                    // validates whether or not the username is in sharedPreferences, and also if the password entered is correct
+                    val isAuthenticated = withContext(Dispatchers.IO) {
+                        getUsernamePasswd(username, password)
+                    }
                     if (isAuthenticated) {
                         val newState = UserState(userId.toInt(), username, password)
-
+                        userViewModel.setUser(newState)
+                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    } else {
+                        // TODO adjust UI so that an error TextView will report to the user that username/password does not exist or does not match
+                        Log.println(Log.VERBOSE, "LoginFragment", "Username incorrect or does not match")
                     }
                 }
             }
@@ -103,21 +112,15 @@ class LoginActivity(
 
             // entered password does not match
             if (passwdStored != passwdHashed) {
+                Log.println(Log.VERBOSE, "LoginActivity", "Entered password does not match")
                 userId = 0
                 return false
             }
         } else {
-            // user doesn't exist in SharedPreferences
-            withContext(Dispatchers.IO) {
-                val newUser = User(username = username)
-                userId = budgetDB.userDao().insertUser(newUser)
-            }
-
-            // create a new user and store it with its hashed password in SharedPreferences
-            with(userPasswdKV.edit()) {
-                putString(username, passwdHashed)
-                apply()
-            }
+            // user doesn't exist in the database
+            // so add an error text view to report this to the user
+            Log.println(Log.VERBOSE, "LoginActivity", "Entered username/password does not exist")
+            return false
         }
         return true
     }
