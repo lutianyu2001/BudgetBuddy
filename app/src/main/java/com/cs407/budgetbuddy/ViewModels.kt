@@ -6,7 +6,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class UserState(
-    val id: Int = 0, val username: String = "", val password: String = ""
+    val id: Int = 0,
+    val username: String = "",
+    val email: String = "",
+    val password: String = ""
 )
 
 class UserViewModel : ViewModel() {
@@ -15,7 +18,10 @@ class UserViewModel : ViewModel() {
 
     fun setUser(state: UserState) {
         _userState.update { currentState ->
-            currentState.copy(id = state.id, username = state.username, password = state.password)
+            currentState.copy(id = state.id,
+                username = state.username,
+                email = state.email,
+                password = state.password)
         }
     }
 }

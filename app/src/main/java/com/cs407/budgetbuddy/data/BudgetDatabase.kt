@@ -77,6 +77,9 @@ interface UserDao {
 
     @Query("SELECT userId FROM User WHERE username = :username")
     suspend fun getUserId(username: String): Long
+
+    @Query("SELECT email FROM User WHERE username = :username")
+    suspend fun getUserEmail(username: String): String
 }
 
 @Dao

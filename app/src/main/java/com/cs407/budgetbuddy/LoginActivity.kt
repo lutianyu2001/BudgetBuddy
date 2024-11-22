@@ -73,8 +73,15 @@ class LoginActivity(
                         getUsernamePasswd(username, password)
                     }
                     if (isAuthenticated) {
-                        val newState = UserState(userId.toInt(), username, password)
+                        val email = budgetDB.userDao().getUserEmail(username)
+                        val newState = UserState(id = userId.toInt(),
+                            username = username,
+                            email = email,
+                            password = password)
                         userViewModel.setUser(newState)
+
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        intent.putExtra("username", username)
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     } else {
                         // TODO adjust UI so that an error TextView will report to the user that username/password does not exist or does not match

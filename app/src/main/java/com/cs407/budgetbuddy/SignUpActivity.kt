@@ -39,6 +39,8 @@ class SignUpActivity(
         userPasswdKV = getSharedPreferences(getString(R.string.userPasswdKV), Context.MODE_PRIVATE)
         budgetDB = BudgetDatabase.getDatabase(this)
 
+        userViewModel = injectedUserViewModel ?: UserViewModel()
+
         val editTextUsername = findViewById<EditText>(R.id.editTextSignUpUsername)
         val editTextEmail = findViewById<EditText>(R.id.editTextSignUpEmail)
         val editTextPassword = findViewById<EditText>(R.id.editTextSignUpPassword)
@@ -118,12 +120,24 @@ class SignUpActivity(
     private fun saveUserToDatabaseAndSharedPrefs(username: String, email: String, phoneNumber: String, password: String) {
         lifecycleScope.launch(Dispatchers.IO) {
             val newUser = User(username = username, email = email, phoneNumber = phoneNumber)
-            budgetDB.userDao().insertUser(newUser)
+            val userId = budgetDB.userDao().insertUser(newUser)
 
             val hashedPasswd = hash(password)
             with (userPasswdKV.edit()) {
                 putString(username, hashedPasswd)
                 apply()
+            }
+
+            // update UserViewModel with generated userId
+            withContext(Dispatchers.Main) {
+                userViewModel.setUser(
+                    UserState(
+                        id = userId.toInt(),
+                        username = username,
+                        email = email,
+                        password = hashedPasswd
+                    )
+                )
             }
         }
     }
