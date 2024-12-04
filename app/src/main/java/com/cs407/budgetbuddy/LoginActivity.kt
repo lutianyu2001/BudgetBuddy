@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import android.content.SharedPreferences
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.cs407.budgetbuddy.data.BudgetDatabase
 import com.cs407.budgetbuddy.data.User
@@ -64,7 +65,7 @@ class LoginActivity(
 
             if (username.isBlank() ||
                 password.isBlank()) {
-                // TODO adjust UI so that an error TextView will report to the user that entries are mandatory
+                showToast("Username or password is blank.")
                 Log.println(Log.VERBOSE, "LoginFragment", "username or password is blank")
             } else {
                 lifecycleScope.launch {
@@ -84,7 +85,7 @@ class LoginActivity(
                         intent.putExtra("username", username)
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     } else {
-                        // TODO adjust UI so that an error TextView will report to the user that username/password does not exist or does not match
+                        showToast("Username and password combination is incorrect.")
                         Log.println(Log.VERBOSE, "LoginFragment", "Username incorrect or does not match")
                     }
                 }
@@ -119,6 +120,7 @@ class LoginActivity(
 
             // entered password does not match
             if (passwdStored != passwdHashed) {
+                showToast("The entered password does not match.")
                 Log.println(Log.VERBOSE, "LoginActivity", "Entered password does not match")
                 userId = 0
                 return false
@@ -126,6 +128,7 @@ class LoginActivity(
         } else {
             // user doesn't exist in the database
             // so add an error text view to report this to the user
+            showToast("The entered username and password combination does not exist.")
             Log.println(Log.VERBOSE, "LoginActivity", "Entered username/password does not exist")
             return false
         }
@@ -135,5 +138,11 @@ class LoginActivity(
     private fun hash(input: String): String{
         return MessageDigest.getInstance("SHA-256").digest(input.toByteArray())
             .fold("") {str, it -> str + "%02x".format(it) }
+    }
+
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

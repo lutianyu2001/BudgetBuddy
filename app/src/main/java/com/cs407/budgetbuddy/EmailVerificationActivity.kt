@@ -13,6 +13,7 @@ import com.cs407.budgetbuddy.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -35,8 +36,11 @@ class EmailVerificationActivity : AppCompatActivity() {
         val buttonResendEmail = findViewById<Button>(R.id.buttonResendEmail)
         val buttonBackToLoginView = findViewById<Button>(R.id.buttonBackToLoginView)
 
+        checkIfUserVerifiedAlreadyAndSave0()
+
         buttonResendEmail.setOnClickListener {
             resendVerificationEmail()
+            checkIfUserVerifiedAlreadyAndSave0()
         }
 
         buttonBackToLoginView.setOnClickListener {
@@ -65,6 +69,39 @@ class EmailVerificationActivity : AppCompatActivity() {
             }
     }
 
+    private fun checkIfUserVerifiedAlreadyAndSave0() {
+        lifecycleScope.launch {
+            checkIfUserVerifiedAlreadyAndSave()
+        }
+    }
+
+    private suspend fun checkIfUserVerifiedAlreadyAndSave() {
+        val user = auth.currentUser
+
+        if (user == null) {
+            Log.println(Log.ERROR, "EmailVerificationActivity", "No user logged in right now")
+            return
+        }
+
+        var attempts = 0
+        var maxAttempts = 10
+        val pollDelayMillis = 5000L
+
+
+        while (attempts < maxAttempts) {
+            user.reload()
+            if (user.isEmailVerified) {
+                Log.println(Log.VERBOSE, "EmailVerificationActivity", "Email Verification was verified")
+                saveUserToDatabaseAndSharedPrefsIfVerified()
+                return
+            }
+            Log.v("EmailVerificationActivity", "Email not verified yet, keep trying")
+            attempts++
+            delay(pollDelayMillis)
+        }
+        saveUserToDatabaseAndSharedPrefsIfVerified()
+    }
+
     private suspend fun saveUserToDatabaseAndSharedPrefsIfVerified() {
         val user = auth.currentUser
 
@@ -86,14 +123,13 @@ class EmailVerificationActivity : AppCompatActivity() {
                 )
                 budgetDB.userDao().insertUser(newUser)
 
+
                 // save user to shared preferences
                 with(userPasswdKV.edit()) {
                     putString(userState.username, userState.password)
                     apply()
                 }
             }
-
-
         }
     }
 }

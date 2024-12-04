@@ -97,8 +97,8 @@ class SignUpActivity(
                                 val user = auth.currentUser
                                 user?.sendEmailVerification()?.addOnCompleteListener { verificationTask ->
                                     if (verificationTask.isSuccessful) {
-                                        Log.println(Log.VERBOSE, "SignUpActivity", "Verification email sent")
-                                        saveUserToDatabaseAndSharedPrefs(username, email, phoneNumber, password)
+                                        Log.println(Log.VERBOSE, "SignUpActivity", "Email Verification sent")
+                                        userViewModel.setUser(UserState(id = 0, username = username, email = email, password = hash(password)))
                                         startActivity(Intent(this@SignUpActivity, EmailVerificationActivity::class.java))
                                     } else {
                                         Log.println(Log.ERROR, "SignUpActivity", "Verification email failed to send")
@@ -114,31 +114,6 @@ class SignUpActivity(
 
         buttonToLoginView.setOnClickListener {
             finish() //take the user back to the LoginActivity
-        }
-    }
-
-    private fun saveUserToDatabaseAndSharedPrefs(username: String, email: String, phoneNumber: String, password: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val newUser = User(username = username, email = email, phoneNumber = phoneNumber)
-            val userId = budgetDB.userDao().insertUser(newUser)
-
-            val hashedPasswd = hash(password)
-            with (userPasswdKV.edit()) {
-                putString(username, hashedPasswd)
-                apply()
-            }
-
-            // update UserViewModel with generated userId
-            withContext(Dispatchers.Main) {
-                userViewModel.setUser(
-                    UserState(
-                        id = userId.toInt(),
-                        username = username,
-                        email = email,
-                        password = hashedPasswd
-                    )
-                )
-            }
         }
     }
 
