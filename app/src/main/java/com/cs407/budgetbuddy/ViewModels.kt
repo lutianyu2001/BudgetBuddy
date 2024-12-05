@@ -9,7 +9,8 @@ data class UserState(
     val id: Int = 0,
     val username: String = "",
     val email: String = "",
-    val password: String = ""
+    val password: String = "",
+    val phoneNumber: String = ""
 )
 
 class UserViewModel : ViewModel() {

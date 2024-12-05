@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,8 +17,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.security.MessageDigest
 
-class EmailVerificationActivity : AppCompatActivity() {
+class EmailVerificationActivity(): AppCompatActivity() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var userPasswdKV: SharedPreferences
     private lateinit var budgetDB: BudgetDatabase
@@ -29,9 +31,36 @@ class EmailVerificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_email_verify)
 
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        userViewModel.setUser(
+            UserState(
+            id = 0,
+            email = intent.getStringExtra("email") ?: "",
+            username = intent.getStringExtra("username") ?: "",
+            password = intent.getStringExtra("password") ?: "",
+            phoneNumber = intent.getStringExtra("phoneNumber") ?: ""
+            )
+        )
+
         userPasswdKV = getSharedPreferences(getString(R.string.userPasswdKV), MODE_PRIVATE)
         budgetDB = BudgetDatabase.getDatabase(this)
         auth = FirebaseAuth.getInstance()
+
+        val user = auth.currentUser
+        user?.let {
+            if (!it.isEmailVerified) {
+                if (!it.isEmailVerified) {
+                    it.sendEmailVerification()
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+
+                                Log.v("EmailVerificationActivity", "Verification email sent to ${it.email}")
+                            } else {
+                                Log.e("EmailVerificationActivity", "Failed to send verification email", task.exception)
+                            }
+                        }
+                }
+            }
+        }
 
         val buttonResendEmail = findViewById<Button>(R.id.buttonResendEmail)
         val buttonBackToLoginView = findViewById<Button>(R.id.buttonBackToLoginView)
@@ -85,7 +114,7 @@ class EmailVerificationActivity : AppCompatActivity() {
 
         var attempts = 0
         var maxAttempts = 10
-        val pollDelayMillis = 5000L
+        val pollDelayMillis = 2000L
 
 
         while (attempts < maxAttempts) {
@@ -93,6 +122,7 @@ class EmailVerificationActivity : AppCompatActivity() {
             if (user.isEmailVerified) {
                 Log.println(Log.VERBOSE, "EmailVerificationActivity", "Email Verification was verified")
                 saveUserToDatabaseAndSharedPrefsIfVerified()
+                Log.println(Log.VERBOSE, "EmailVerificationAcivitiy", "User saved to database and shared prefs")
                 return
             }
             Log.v("EmailVerificationActivity", "Email not verified yet, keep trying")
@@ -125,11 +155,23 @@ class EmailVerificationActivity : AppCompatActivity() {
 
 
                 // save user to shared preferences
+                Log.println(Log.VERBOSE,"EmailVerificationActivity", "username ${userState.username} password ${userState.password}")
                 with(userPasswdKV.edit()) {
-                    putString(userState.username, userState.password)
+                    putString(userState.username, hash(userState.password))
                     apply()
                 }
             }
+        }
+    }
+
+    private fun hash(input: String): String{
+        return MessageDigest.getInstance("SHA-256").digest(input.toByteArray())
+            .fold("") {str, it -> str + "%02x".format(it) }
+    }
+
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
 }
