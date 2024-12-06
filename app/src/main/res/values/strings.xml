@@ -7,4 +7,31 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="preview">Preview</string>
+    <string name="transactions">Transactions</string>
+    <string name="monthly_summary">Monthly Summary</string>
+    <string name="search_transaction">search transaction</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="biometric">Biometric</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="forgot_username_or_password">Forgot username or password?</string>
+    <string name="contact_us">Contact us</string>
+    <string name="edit">Edit</string>
+    <string name="name">Name</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="merchant">Merchant</string>
+    <string name="source">Source</string>
+    <string name="transaction_details">Transaction Details</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="re_enter_password">Re-enter Password</string>
+    <string name="phone_number_optional">Phone Number (Optional)</string>
+    <string name="back">Back</string>
+
 </resources>

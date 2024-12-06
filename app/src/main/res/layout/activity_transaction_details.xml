@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Transaction Details"
+            app:title="@string/transaction_details"
             app:titleCentered="true">
 
             <com.google.android.material.button.MaterialButton
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
-                android:text="Edit"
+                android:text="@string/edit"
                 android:textColor="?attr/colorPrimary"
                 app:icon="@drawable/ic_edit" />
 
@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
 
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount"
+                    android:text="@string/amount"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"/>
 
@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date"
+                    android:text="@string/date"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"/>
 
@@ -101,7 +101,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category"
+                    android:text="@string/category"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"/>
 
@@ -122,7 +122,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Merchant"
+                    android:text="@string/merchant"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"/>
 
@@ -135,7 +135,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Source"
+                    android:text="@string/source"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"/>
 

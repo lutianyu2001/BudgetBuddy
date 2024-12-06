@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Login"
+        android:text="@string/login"
         android:textSize="32sp"
         android:textStyle="bold" />
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Username"
+        android:hint="@string/username"
         app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="Password"
+        android:hint="@string/password"
         app:endIconMode="clear_text"
         app:passwordToggleEnabled="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -68,7 +68,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remember me" />
+                android:text="@string/remember_me" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +85,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Biometric" />
+                android:text="@string/biometric" />
         </LinearLayout>
     </LinearLayout>
 
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:padding="12dp"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         app:cornerRadius="24dp" />
 
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:padding="12dp"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:textAllCaps="false"
         app:cornerRadius="24dp" />
 
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"
-        android:text="Forgot username or password?"
+        android:text="@string/forgot_username_or_password"
         android:textColor="?attr/colorPrimary" />
 
     <Space
@@ -129,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Contact us"
+        android:text="@string/contact_us"
         android:textColor="?attr/colorPrimary" />
 
 </LinearLayout>
