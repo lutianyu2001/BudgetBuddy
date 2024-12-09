@@ -70,8 +70,6 @@
         * SupportActivity.kt
     * Bug Fix: Sky Lu
     * App Remote Server: Sky Lu
-    * *TODO: Backend: Sanjana Golla*
-
 
 ### Wireframe Contribution (By 10/08/2024)
 
