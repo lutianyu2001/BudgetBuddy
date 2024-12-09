@@ -14,7 +14,8 @@
 ## Content
 
 1. Android Studio Project Files
-2. Other Files (in `misc/`)
+2. Sample Bank Statement for "Statement Scan" feature
+3. Other Files (in `misc/`)
 
 ## How to Contribute
 
