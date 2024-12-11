@@ -2,12 +2,20 @@ package com.cs407.budgetbuddy
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cs407.budgetbuddy.data.Transaction
+import com.itextpdf.kernel.pdf.PdfReader
+import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 import java.io.File
@@ -37,13 +45,18 @@ class ScanActivity : AppCompatActivity() {
             if (pdfUri != null) {
                 val pdfFile = copyUriToFile(pdfUri)
                 if (pdfFile != null) {
-                    val transactions = extractTransactionsFromPDF(pdfFile.absolutePath)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val transactions = extractTransactionsFromPDF(pdfFile.absolutePath)
 
-                    val displayText = transactions.joinToString("\n") { transaction ->
-                        "Name: ${transaction.name}, Amount: ${transaction.amount}, Date: ${transaction.date}, Category: ${transaction.category}, Merchant: ${transaction.merchant}"
+                        val displayText = transactions.joinToString("\n") { transaction ->
+                            "Name: ${transaction.name}, Amount: ${transaction.amount}, Date: ${transaction.date}, Category: ${transaction.category}, Merchant: ${transaction.merchant}"
+                        }
+
+                        withContext(Dispatchers.Main) {
+                            showToast(displayText)
+                            Log.d("ScanActivity", "Extracted Transactions:\n$displayText")
+                        }
                     }
-
-                    showToast(displayText)
                 }
             }
         }
@@ -65,6 +78,9 @@ class ScanActivity : AppCompatActivity() {
             inputStream?.close()
             outputStream.close()
 
+            Log.d("ScanActivity", "PDF File path: ${tempFile.absolutePath}")
+
+
             tempFile
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,69 +88,67 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    fun extractTransactionsFromPDF(pdfFilePath: String): List<Transaction> {
+    fun extractTransactionsFromPDF(filePath: String): List<Transaction> {
         val transactions = mutableListOf<Transaction>()
-        val document = PDDocument.load(File(pdfFilePath))
-        val pdfText = PDFTextStripper().getText(document)
-        document.close()
+        val name = "Sanjana Golla"
 
-        val lines = pdfText.lines()
+        try {
+            val pdfDocument = com.itextpdf.kernel.pdf.PdfDocument(PdfReader(filePath))
 
-        var isParsingTable = false
-        var currentTransaction: MutableMap<String, String> = mutableMapOf()
-        var accumulatedMerchant = StringBuilder()
-        val name = "Sanjana Golla" // Static for now
+            for (page in 1..pdfDocument.numberOfPages) {
+                val pageText = PdfTextExtractor.getTextFromPage(pdfDocument.getPage(page))
+                val lines = pageText.lines()
 
-        for (line in lines) {
-            if (line.contains("Trans. Date", ignoreCase = true) && line.contains("Purchases", ignoreCase = true)) {
-                isParsingTable = true
-                continue
-            }
+                var currentTransaction: MutableMap<String, String> = mutableMapOf()
+                val accumulatedMerchant = StringBuilder()
 
-            if (isParsingTable) {
-                val transactionRegex = """(\d{2}/\d{2})\s+([A-Z\s]+)\s+([a-zA-Z\s]+)\s+\$(-?\d+\.\d{2})""".toRegex()
-                val matchResult = transactionRegex.find(line)
+                val transactionRegex = """^(\d{2}/\d{2})\s+(.*)\s+([a-zA-Z\s]+)\s+\$(-?\d+\.\d{2})$""".toRegex()
 
-                if (matchResult != null) {
-                    if (currentTransaction.isNotEmpty()) {
-                        transactions.add(
-                            Transaction(
-                                name = name,
-                                amount = currentTransaction["amount"]?.toDouble() ?: 0.0,
-                                date = currentTransaction["date"] ?: "",
-                                category = currentTransaction["category"] ?: "",
-                                merchant = accumulatedMerchant.toString().trim()
+                for (line in lines) {
+                    val matchResult = transactionRegex.matchEntire(line)
+
+                    if (matchResult != null) {
+                        if (currentTransaction.isNotEmpty()) {
+                            transactions.add(
+                                Transaction(
+                                    name = name,
+                                    amount = currentTransaction["amount"]?.toDouble() ?: 0.0,
+                                    date = currentTransaction["date"] ?: "",
+                                    category = currentTransaction["category"] ?: "",
+                                    merchant = accumulatedMerchant.toString().trim()
+                                )
                             )
-                        )
+                            currentTransaction.clear()
+                            accumulatedMerchant.clear()
+                        }
 
-                        currentTransaction.clear()
-                        accumulatedMerchant.clear()
-                    }
-                    val (date, merchant, category, amount) = matchResult.destructured
-                    currentTransaction["date"] = date
-                    accumulatedMerchant.append(merchant.trim())
-                    currentTransaction["category"] = category.trim()
-                    currentTransaction["amount"] = amount.replace("[$,]".toRegex(), "").trim()
-                } else {
-                    if (currentTransaction.isNotEmpty()) {
+                        val (date, merchant, category, amount) = matchResult.destructured
+                        currentTransaction["date"] = date
+                        currentTransaction["category"] = category
+                        currentTransaction["amount"] = amount.replace("[$,]".toRegex(), "").trim()
+                        accumulatedMerchant.append(merchant.trim())
+                    } else if (currentTransaction.isNotEmpty()) {
                         accumulatedMerchant.append(" ").append(line.trim())
                     }
                 }
-            }
 
-            if (currentTransaction.isNotEmpty()) {
-                transactions.add(
-                    Transaction(
-                        name = name,
-                        amount = currentTransaction["amount"]?.toDouble() ?: 0.0,
-                        date = currentTransaction["date"] ?: "",
-                        category = currentTransaction["category"] ?: "",
-                        merchant = accumulatedMerchant.toString().trim()
+                if (currentTransaction.isNotEmpty()) {
+                    transactions.add(
+                        Transaction(
+                            name = name,
+                            amount = currentTransaction["amount"]?.toDouble() ?: 0.0,
+                            date = currentTransaction["date"] ?: "",
+                            category = currentTransaction["category"] ?: "",
+                            merchant = accumulatedMerchant.toString().trim()
+                        )
                     )
-                )
+                }
             }
-        }
 
+            pdfDocument.close()
+        } catch (e: Exception) {
+            Log.e("ScanActivity", "Error extracting transactions", e)
+        }
 
         return transactions
     }
