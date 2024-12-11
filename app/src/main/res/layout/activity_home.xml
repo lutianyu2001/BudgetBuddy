@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Transactions"
+        android:text="@string/transactions"
         android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Monthly Summary"
+                android:text="@string/monthly_summary"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -79,7 +79,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Income"
+                                android:text="@string/income"
                                 android:textColor="#4CAF50"
                                 android:textSize="18sp"
                                 android:layout_marginStart="8dp"/>
@@ -121,7 +121,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Expenses"
+                                android:text="@string/expenses"
                                 android:textColor="#F44336"
                                 android:textSize="18sp"
                                 android:layout_marginStart="8dp"/>
@@ -155,14 +155,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Balance"
+                    android:text="@string/balance"
                     android:textSize="24sp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Preview"
+                    android:text="@string/preview"
                     android:textColor="#4CAF50"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -189,7 +189,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="search transaction"
+                        android:hint="@string/search_transaction"
                         android:textColorHint="#666666"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"/>

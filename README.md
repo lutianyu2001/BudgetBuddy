@@ -14,17 +14,38 @@
 ## Content
 
 1. Android Studio Project Files
-2. Other Files (in `misc/`)
+2. Sample Bank Statement for "Statement Scan" feature
+3. Other Files (in `misc/`)
 
 ## How to Contribute
 
 ***IMPORTANT: MAKE SURE You checkout README.md and pull from this repository every time before start working!***
 
-## Progress & Contribution
+## Progress & Contribution (Latest to Oldest)
 
-### Milestone 2 (By 11/22/2024)  
+### Planned Final Contribution
+
+* Qiming Zhang: 35%
+* Sky Lu: 35%
+* Sanjana Golla: 30%
+
+### Milestone 3
+
+1. **Statement PDF Import Function**: Sanjana Golla
+2. Intergration and Bug Fix: Qiming Zhang, Sky Lu
+3. Poster: Qiming Zhang, Sky Lu, Sanjana Golla
+
+### Milestone 2 (By 12/02/2024)
+
+1. Main Program Backend: Sky Lu
+2. Main Program Frontend: Qiming Zhang
+3. Login Function Backend & Frontend: Sanjana Golla
 
 ### Mid-semester Project Updates Report Contribution (By 11/18/2024)
+
+* Qiming Zhang: 45%
+* Sky Lu: 45%
+* Sanjana Golla: 10%
 
 ### Milestone 1 (By 11/08/2024)
 
@@ -49,14 +70,11 @@
         * SupportActivity.kt
     * Bug Fix: Sky Lu
     * App Remote Server: Sky Lu
-    * *TODO: Backend: Sanjana Golla*
-
 
 ### Wireframe Contribution (By 10/08/2024)
 
 1. Project Report: Sky Lu
 2. Wireframe
-
     * Login: Sky Lu
     * Sign up: Sky Lu
     * Contact Us: Sky Lu
@@ -70,7 +88,7 @@
     * Analysis (Default: Week): Qiming Zhang
     * Analysis Sub-panel (Month, Year): Sanjana Golla
   
-### Proposal Contribution (By 09/17/2024)
+### Project Proposal Contribution (By 09/17/2024)
 
 * Qiming Zhang: 60%
 * Sky Lu: 30%
