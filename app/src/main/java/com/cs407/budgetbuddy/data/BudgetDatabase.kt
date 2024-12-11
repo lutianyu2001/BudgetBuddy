@@ -76,10 +76,15 @@ interface UserDao {
     suspend fun insertUser(user: User): Long
 
     @Query("SELECT userId FROM User WHERE username = :username")
-    suspend fun getUserId(username: String): Long
+    suspend fun getUserId(username: String): Int
 
     @Query("SELECT email FROM User WHERE username = :username")
     suspend fun getUserEmail(username: String): String
+
+    @Query("SELECT phoneNumber FROM User WHERE username = :username")
+    suspend fun getUserPhoneNumber(username: String): String
+
+
 }
 
 @Dao

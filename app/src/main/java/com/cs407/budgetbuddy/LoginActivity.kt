@@ -35,7 +35,7 @@ class LoginActivity(
     private lateinit var userPasswdKV: SharedPreferences
     private lateinit var budgetDB: BudgetDatabase
 
-    private var userId: Long = 0
+    private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +83,8 @@ class LoginActivity(
 
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         intent.putExtra("username", username)
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                        intent.putExtra("password", password)
+                        startActivity(intent)
                     } else {
                         showToast("Username and password combination is incorrect.")
                         Log.println(Log.VERBOSE, "LoginFragment", "Username incorrect or does not match")
