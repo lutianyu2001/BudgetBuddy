@@ -37,6 +37,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/DEPENDENCIES"
         }
     }
 
@@ -100,4 +101,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
+
+    implementation("org.apache.pdfbox:pdfbox:2.0.29")
+    implementation ("com.itextpdf:itext7-core:7.2.5")
 }

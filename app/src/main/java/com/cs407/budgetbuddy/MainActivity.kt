@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val intent = Intent(this, LoginActivity::class.java)
+        //val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, ScanActivity::class.java)
         startActivity(intent)
         finish()
     }
