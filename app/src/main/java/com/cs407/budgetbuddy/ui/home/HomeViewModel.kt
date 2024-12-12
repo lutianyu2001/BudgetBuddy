@@ -1,5 +1,6 @@
 package com.cs407.budgetbuddy.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,9 +27,6 @@ class HomeViewModel(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    // Store the original transaction list for filtering
-    private var allTransactions: List<Transaction> = emptyList()
-
     init {
         loadTransactions()
     }
@@ -43,20 +41,18 @@ class HomeViewModel(
                 _isLoading.value = true
 
                 // If query is empty, restore all transactions
-                if (query.isBlank()) {
-                    _transactions.value = allTransactions
-                    updateSummary(allTransactions)
-                    return@launch
+                val transactions = if (query.isBlank()) {
+                    repository.getAllTransactions()
+                } else {
+                    // Search in both category and details
+                    repository.getAllTransactions().filter { transaction ->
+                        transaction.category.contains(query, ignoreCase = true) ||
+                                transaction.details.contains(query, ignoreCase = true)
+                    }
                 }
 
-                // Search in both category and details
-                val filteredTransactions = allTransactions.filter { transaction ->
-                    transaction.category.contains(query, ignoreCase = true) ||
-                            transaction.details.contains(query, ignoreCase = true)
-                }
-
-                _transactions.value = filteredTransactions
-                updateSummary(filteredTransactions)
+                _transactions.value = transactions
+                updateSummary(transactions)
             } catch (e: Exception) {
                 _error.value = e.message
             } finally {
@@ -73,9 +69,9 @@ class HomeViewModel(
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                allTransactions = repository.getAllTransactions()
-                _transactions.value = allTransactions
-                updateSummary(allTransactions)
+                val transactions = repository.getAllTransactions()
+                _transactions.value = transactions
+                updateSummary(transactions)
             } catch (e: Exception) {
                 _error.value = e.message
             } finally {

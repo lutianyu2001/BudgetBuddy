@@ -55,9 +55,9 @@ class TransactionRepository private constructor(context: Context) : Repository()
             arrayOf(userId.toString())
         ) { cursor ->
             val transactions = mutableListOf<Transaction>()
-            while (cursor.moveToNext()) {
+            do {
                 transactions.add(cursor.toTransaction())
-            }
+            } while (cursor.moveToNext())
             transactions
         } ?: emptyList()
     }
@@ -86,11 +86,11 @@ class TransactionRepository private constructor(context: Context) : Repository()
             )
         ) { cursor ->
             val dailyTotals = mutableMapOf<LocalDate, Double>()
-            while (cursor.moveToNext()) {
+            do {
                 val date = LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow("date")))
                 val total = cursor.getDouble(cursor.getColumnIndexOrThrow("total"))
                 dailyTotals[date] = total
-            }
+            } while (cursor.moveToNext())
             dailyTotals
         } ?: emptyMap()
     }
@@ -110,9 +110,9 @@ class TransactionRepository private constructor(context: Context) : Repository()
             arrayOf(userId.toString(), category)
         ) { cursor ->
             val transactions = mutableListOf<Transaction>()
-            while (cursor.moveToNext()) {
+            do {
                 transactions.add(cursor.toTransaction())
-            }
+            } while (cursor.moveToNext())
             transactions
         } ?: emptyList()
     }
@@ -139,9 +139,9 @@ class TransactionRepository private constructor(context: Context) : Repository()
             )
         ) { cursor ->
             val transactions = mutableListOf<Transaction>()
-            while (cursor.moveToNext()) {
+            do {
                 transactions.add(cursor.toTransaction())
-            }
+            } while (cursor.moveToNext())
             transactions
         } ?: emptyList()
     }
@@ -166,9 +166,9 @@ class TransactionRepository private constructor(context: Context) : Repository()
             )
         ) { cursor ->
             val transactions = mutableListOf<Transaction>()
-            while (cursor.moveToNext()) {
+            do {
                 transactions.add(cursor.toTransaction())
-            }
+            } while (cursor.moveToNext())
             transactions
         } ?: emptyList()
     }
@@ -304,11 +304,11 @@ class TransactionRepository private constructor(context: Context) : Repository()
             queryArgs.toTypedArray()
         ) { cursor ->
             val totals = mutableMapOf<String, Double>()
-            while (cursor.moveToNext()) {
+            do {
                 val category = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CATEGORY))
                 val total = cursor.getDouble(cursor.getColumnIndexOrThrow("total"))
                 totals[category] = total
-            }
+            } while (cursor.moveToNext())
             totals
         } ?: emptyMap()
     }

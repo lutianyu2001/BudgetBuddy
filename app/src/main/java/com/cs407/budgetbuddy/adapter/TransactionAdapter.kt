@@ -1,10 +1,12 @@
 package com.cs407.budgetbuddy.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.cs407.budgetbuddy.R
 import com.cs407.budgetbuddy.databinding.ItemTransactionBinding
 import com.cs407.budgetbuddy.model.Transaction
 import com.cs407.budgetbuddy.util.RecyclerViewListener
@@ -43,6 +45,7 @@ class TransactionAdapter(
             }
         }
 
+        @SuppressLint("ResourceAsColor")
         fun bind(transaction: Transaction) {
             binding.apply {
                 tvDate.text = transaction.getFormattedDate()
@@ -51,9 +54,9 @@ class TransactionAdapter(
                 
                 // Set text color based on transaction type
                 tvAmount.setTextColor(if (transaction.type.value == 1) {
-                    0xFF4CAF50.toInt() // Green for income
+                    R.color.income // Green for income
                 } else {
-                    0xFFE91E63.toInt() // Pink for expense
+                    R.color.expense // Pink for expense
                 })
             }
         }

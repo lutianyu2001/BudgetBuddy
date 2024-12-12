@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,6 @@ class HomeFragment : Fragment(), RecyclerViewListener {
             setHasFixedSize(true)
         }
 
-        // Setup search with improved UX
         binding.editSearch.apply {
             // Set proper input type and IME options
             inputType = android.text.InputType.TYPE_CLASS_TEXT
@@ -90,8 +90,7 @@ class HomeFragment : Fragment(), RecyclerViewListener {
 
         // Setup swipe refresh
         binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.editSearch.text?.clear()
-            viewModel.refreshData()
+            refresh()
         }
     }
 
@@ -111,8 +110,7 @@ class HomeFragment : Fragment(), RecyclerViewListener {
     private fun observeViewModel() {
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             transactionAdapter.submitList(transactions)
-            updateEmptyState(transactions)
-            binding.swipeRefreshLayout.isRefreshing = false
+//            binding.swipeRefreshLayout.isRefreshing = false
         }
 
         viewModel.summary.observe(viewLifecycleOwner) { summary ->
@@ -125,6 +123,7 @@ class HomeFragment : Fragment(), RecyclerViewListener {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.swipeRefreshLayout.isRefreshing = isLoading
+            Log.d("Loading State", binding.swipeRefreshLayout.isRefreshing.toString())
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
@@ -133,35 +132,35 @@ class HomeFragment : Fragment(), RecyclerViewListener {
             }
         }
     }
-
-    private fun updateEmptyState(transactions: List<Transaction>) {
-        if (transactions.isEmpty() && !binding.swipeRefreshLayout.isRefreshing) {
-            if (binding.editSearch.text!!.isNotEmpty()) {
-                // Show no search results message
-                showEmptyState("No transactions found matching your search")
-            } else {
-                // Show no transactions message
-                showEmptyState("No transactions yet.\nTap + to add your first transaction")
-            }
-        } else {
-            hideEmptyState()
-        }
-    }
-
-    private fun showEmptyState(message: String) {
-        binding.apply {
-            emptyStateText.text = message
-            emptyStateText.visibility = View.VISIBLE
-            transactionsRecyclerView.visibility = View.GONE
-        }
-    }
-
-    private fun hideEmptyState() {
-        binding.apply {
-            emptyStateText.visibility = View.GONE
-            transactionsRecyclerView.visibility = View.VISIBLE
-        }
-    }
+//
+//    private fun updateEmptyState(transactions: List<Transaction>) {
+//        if (transactions.isEmpty() && !binding.swipeRefreshLayout.isRefreshing) {
+//            if (binding.editSearch.text!!.isNotEmpty()) {
+//                // Show no search results message
+//                showEmptyState("No transactions found matching your search")
+//            } else {
+//                // Show no transactions message
+//                showEmptyState("No transactions yet.\nTap + to add your first transaction")
+//            }
+//        } else {
+//            hideEmptyState()
+//        }
+//    }
+//
+//    private fun showEmptyState(message: String) {
+//        binding.apply {
+//            emptyStateText.text = message
+//            emptyStateText.visibility = View.VISIBLE
+//            transactionsRecyclerView.visibility = View.GONE
+//        }
+//    }
+//
+//    private fun hideEmptyState() {
+//        binding.apply {
+//            emptyStateText.visibility = View.GONE
+//            transactionsRecyclerView.visibility = View.VISIBLE
+//        }
+//    }
 
     override fun onItemClick(view: View, position: Int) {
         viewModel.getTransactionAt(position)?.let { transaction ->
@@ -170,7 +169,7 @@ class HomeFragment : Fragment(), RecyclerViewListener {
     }
 
     override fun onItemLongClick(view: View, position: Int) {
-        // Not implemented - could be used for additional functionality
+        // Not implemented, currently unneeded
     }
 
     private fun navigateToTransactionDetails(transaction: Transaction) {
@@ -186,6 +185,16 @@ class HomeFragment : Fragment(), RecyclerViewListener {
             viewModel.refreshData()
         }
         snackbar.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refresh()
+    }
+
+    fun refresh() {
+        binding.editSearch.text?.clear()
+        viewModel.refreshData()
     }
 
     override fun onDestroyView() {

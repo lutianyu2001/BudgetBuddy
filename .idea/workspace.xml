@@ -114,7 +114,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e51af32-e5a3-4aad-94cb-537a7b0ccb60" name="Changes" comment="233" />
+    <list default="true" id="1e51af32-e5a3-4aad-94cb-537a7b0ccb60" name="Changes" comment="233">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/adapter/TransactionAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/adapter/TransactionAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/data/repository/TransactionRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/data/repository/TransactionRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeViewModel.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,8 +197,9 @@
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Administrator/Desktop",
+    "last_opened_file_path": "C:/Users/Administrator/Documents/GitHub/BudgetBuddy",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
@@ -327,5 +334,15 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="android.database.sqlite.SQLiteCursor" memberName="mColumns" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="AndroidRunConfigurationType">
+        <watch expression="$result" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
