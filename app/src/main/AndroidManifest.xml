@@ -13,20 +13,21 @@
         android:theme="@style/Theme.BudgetBuddy"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".EmailVerificationActivity" />
-        <activity android:name=".SupportActivity" />
-        <activity android:name=".ResetPasswordActivity" />
+
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.auth.SignUpActivity" />
+        <activity android:name=".ui.auth.EmailVerificationActivity" />
+        <activity android:name=".ui.support.SupportActivity" />
+        <activity android:name=".ui.auth.ResetPasswordActivity" />
+        <activity android:name=".ui.transaction.AddTransactionActivity" />
+        <activity android:name=".ui.transaction.TransactionDetailActivity" />
     </application>
 
 </manifest>
