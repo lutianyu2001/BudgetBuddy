@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cs407.budgetbuddy.R
 import com.cs407.budgetbuddy.adapter.ChartLegendAdapter
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.launch
 
 class AnalysisFragment : Fragment() {
 
@@ -148,7 +150,7 @@ class AnalysisFragment : Fragment() {
         }
 
         viewModel.selectedTimeFrame.observe(viewLifecycleOwner) { timeFrame ->
-            updateSelectedTimeFrameUI(timeFrame)
+//            updateSelectedTimeFrameUI(timeFrame)
             when (timeFrame) {
                 ChartTimeFrame.WEEK -> showLineChart()
                 else -> showPieChart()
@@ -222,16 +224,16 @@ class AnalysisFragment : Fragment() {
         )
     }
 
-    private fun updateSelectedTimeFrameUI(timeFrame: ChartTimeFrame) {
-        val selectedColor = ContextCompat.getColor(requireContext(), R.color.purple_500)
-        val unselectedColor = ContextCompat.getColor(requireContext(), R.color.gray)
-
-        binding.apply {
-            textWeek.setTextColor(if (timeFrame == ChartTimeFrame.WEEK) selectedColor else unselectedColor)
-            textMonth.setTextColor(if (timeFrame == ChartTimeFrame.MONTH) selectedColor else unselectedColor)
-            textYear.setTextColor(if (timeFrame == ChartTimeFrame.YEAR) selectedColor else unselectedColor)
-        }
-    }
+//    private fun updateSelectedTimeFrameUI(timeFrame: ChartTimeFrame) {
+//        val selectedColor = ContextCompat.getColor(requireContext(), R.color.purple_500)
+//        val unselectedColor = ContextCompat.getColor(requireContext(), R.color.gray)
+//
+//        binding.apply {
+//            textWeek.setTextColor(if (timeFrame == ChartTimeFrame.WEEK) selectedColor else unselectedColor)
+//            textMonth.setTextColor(if (timeFrame == ChartTimeFrame.MONTH) selectedColor else unselectedColor)
+//            textYear.setTextColor(if (timeFrame == ChartTimeFrame.YEAR) selectedColor else unselectedColor)
+//        }
+//    }
 
     private fun showLineChart() {
         binding.apply {
@@ -249,9 +251,21 @@ class AnalysisFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        refresh()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    // Public method to refresh data
+    fun refresh() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.refresh()
+        }
     }
 
     companion object {

@@ -141,7 +141,7 @@ class AnalysisViewModel(
         )
     }
 
-    fun refreshData() {
+    fun refresh() {
         loadData()
     }
 }

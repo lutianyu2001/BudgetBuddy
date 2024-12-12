@@ -118,8 +118,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/adapter/TransactionAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/adapter/TransactionAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/data/repository/TransactionRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/data/repository/TransactionRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/analysis/AnalysisFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/analysis/AnalysisFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/analysis/AnalysisViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/analysis/AnalysisViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/home/HomeViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/main/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs407/budgetbuddy/ui/main/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_analysis.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_analysis.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

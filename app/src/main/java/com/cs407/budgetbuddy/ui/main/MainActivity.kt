@@ -11,8 +11,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.cs407.budgetbuddy.R
 import com.cs407.budgetbuddy.databinding.ActivityMainBinding
+import com.cs407.budgetbuddy.ui.analysis.AnalysisFragment
 import com.cs407.budgetbuddy.ui.auth.LoginActivity
 import com.cs407.budgetbuddy.ui.common.ViewModelFactory
+import com.cs407.budgetbuddy.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,7 +47,41 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         // Setup bottom navigation
-        binding.bottomNavigation.setupWithNavController(navController)
+//        binding.bottomNavigation.setupWithNavController(navController)
+
+        // Setup bottom navigation with refresh on reselect
+        binding.bottomNavigation.apply {
+            setupWithNavController(navController)
+
+            // Handle both selection and reselection
+            setOnItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.navigation_home -> {
+                        navController.navigate(R.id.navigation_home)
+                        refreshCurrentFragment()
+                        true
+                    }
+                    R.id.navigation_analysis -> {
+                        navController.navigate(R.id.navigation_analysis)
+                        refreshCurrentFragment()
+                        true
+                    }
+                    R.id.navigation_settings -> {
+                        navController.navigate(R.id.navigation_settings)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            setOnItemReselectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.navigation_home, R.id.navigation_analysis -> {
+                        refreshCurrentFragment()
+                    }
+                }
+            }
+        }
 
         // Define top-level destinations
         val appBarConfiguration = AppBarConfiguration(
@@ -66,6 +102,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> binding.bottomNavigation.visibility = View.GONE
             }
+        }
+    }
+
+    private fun refreshCurrentFragment() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            ?.childFragmentManager
+            ?.fragments
+            ?.firstOrNull()
+
+        when (currentFragment) {
+            is HomeFragment -> currentFragment.refresh()
+            is AnalysisFragment -> currentFragment.refresh()
         }
     }
 
